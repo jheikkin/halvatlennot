@@ -3,14 +3,6 @@ Library           SeleniumLibrary
 
 *** Variables ***
 ${BROWSER}        Chrome
-${URL}            https://www.google.fi
-${URL-FINNAIR}    http://www.travellink.fi
-${URL-TRAVELLINK}    http://www.travellink.fi
-${travellink-xpath1}    xpath=(//*[@id="departure-autocomplete0"]/div[2]/div[3]/div[1]/div[2]/input)
-${travellink-xpath2}    xpath=(//*[@id="destination-autocomplete0"]/div[2]/div[3]/div[1]/div[2]/input)
-${travellink-xpath3}    xpath=(//*[@id="flights-manager"]/div[2]/div[2]/div[1]/div[3]/div[1])
-${travellink-xpath4}    xpath=(//*[@id="flights-manager"]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/div)
-${travellink-xpath5}    xpath=(//*[@id="calendar0"])
 ${URL-HALVATLENNOT}    http://www.halvatlennot.fi
 ${halvatlennot-xpath1}    xpath=(//*[@id="tbAptDep"])
 ${halvatlennot-xpath2}    xpath=(//*[@id="tbAptDest"])
@@ -31,12 +23,8 @@ ${halvatlennot-xpath16}    xpath=(//*[@id="stopsFilter"]/table/tbody/tr[2]/td[1]
 ${halvatlennot-xpath17}    xpath=(//*[@id="stopsFilter"]/table/tbody/tr[3]/td[1]/span)
 
 *** Test Cases ***
-Open Google
-    Open Browser To Google
-    [Teardown]    Close Browser
-
-Open Finnair
-    Open Browser to Finnair
+Open HalvatLennot
+    Open Browser to HalvatLennot
     : FOR    ${index}    IN RANGE    5
     \    ${dDate} =    Set Variable    ${index + 26}
     \    ${rDate} =    Set Variable    ${index + 27}
@@ -48,10 +36,6 @@ Open Finnair
     [Teardown]    Close Browser
 
 *** Keywords ***
-Open Browser To Google
-    Open Browser    ${URL}    ${BROWSER}
-    Title Should Be    Google
-
 Set Dates
     [Arguments]    ${deptDate}=${VARIABLE}    ${deptMonth}=${VARIABLE}    ${retDate}=${VARIABLE}    ${retMonth}=${VARIABLE}
     Wait Until Page Contains Element    ${halvatlennot-xpath1}    30
@@ -85,7 +69,7 @@ Set Dates
     Click Element    ${halvatlennot-xpath17}
     Sleep    10s    to get results
 
-Open Browser To Finnair
+Open Browser To HalvatLennot
     Open Browser    ${URL-HALVATLENNOT}    ${BROWSER}
     Sleep    5s    to get title
     ${Window1Title}=    Get Title
@@ -100,5 +84,3 @@ Get Screenshots
     Capture Page Screenshot
     Execute JavaScript    window.scrollTo(0, 600)
     Capture Page Screenshot
-    #    below code moves the actual browser window position
-    #    Set Window Position    0    -100
