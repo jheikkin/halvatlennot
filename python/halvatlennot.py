@@ -59,6 +59,21 @@ xpaths = { 'halvatlennot-xpath1' : "//*[@id='tbAptDep']",
 chrome_options = Options()
 chrome_options.add_argument('--dns-prefetch-disable')
 mydriver = webdriver.Chrome(chrome_options=chrome_options)
+
+fromWhere = "Helsinki"
+
+whereTo = "Bangkok"
+
+departureDate = "1"
+departureYYYYMM = "2018-7"
+
+returnDate = "1"
+returnYYYYMM = "2018-8"
+
+numberAdults = "2"
+numberChildren = "1"
+
+mydriver = webdriver.Chrome()
 mydriver.get(baseurl)
 mydriver.maximize_window()
 
@@ -69,7 +84,7 @@ mydriver.find_element_by_xpath(xpaths['halvatlennot-xpath1']).send_keys(fromWher
 
 mydriver.find_element_by_xpath(xpaths['halvatlennot-xpath2']).send_keys(whereTo)
 
-# Click and select
+#Click and select
 mydriver.find_element_by_xpath(xpaths['halvatlennot-xpath3']).click()
 
 select = Select(mydriver.find_element_by_xpath(xpaths['halvatlennot-xpath4']))
@@ -126,4 +141,3 @@ for elem in elems:
 		print "#",i," : ",elem.text
 
 mydriver.quit
-

@@ -21,16 +21,21 @@ ${halvatlennot-xpath14}    xpath=(//select[@name="ddChildren"])
 ${halvatlennot-xpath15}    xpath=(//*[@id="btnSearch"])
 ${halvatlennot-xpath16}    xpath=(//*[@id="stopsFilter"]/table/tbody/tr[2]/td[1]/span)
 ${halvatlennot-xpath17}    xpath=(//*[@id="stopsFilter"]/table/tbody/tr[3]/td[1]/span)
+${DepartureDate}   26
+${DepartureMonth}   2017-12
+${ReturnDate}   27
+${ReturnMonth}   2018-1
+${Rounds}   1
 
 *** Test Cases ***
 Open HalvatLennot
     Open Browser to HalvatLennot
-    : FOR    ${index}    IN RANGE    5
-    \    ${dDate} =    Set Variable    ${index + 26}
-    \    ${rDate} =    Set Variable    ${index + 27}
+    : FOR    ${index}    IN RANGE    ${Rounds}
+    \    ${dDate} =    Set Variable    ${index + ${DepartureDate}}
+    \    ${rDate} =    Set Variable    ${index + ${ReturnDate}}
     \    ${dDate} =    Evaluate    str(${dDate})
     \    ${rDate} =    Evaluate    str(${rDate})
-    \    Set Dates    deptDate=${dDate}    deptMonth=2017-12    retDate=${rDate}    retMonth=2018-1
+    \    Set Dates    deptDate=${dDate}    deptMonth=${DepartureMonth}    retDate=${rDate}    retMonth=${ReturnMonth}
     \    Get Screenshots
     \    Go Back
     [Teardown]    Close Browser
