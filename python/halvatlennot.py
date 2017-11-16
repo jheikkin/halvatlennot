@@ -1,9 +1,38 @@
+import sys
 from selenium import webdriver
-
+import pdb
 #Following are optional required
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+
+if len(sys.argv) > 8:
+	fromWhere = sys.argv[1]
+	whereTo = sys.argv[2]
+	departureDate = sys.argv[3]
+	departureYYYYMM = sys.argv[4]
+	returnDate = sys.argv[5]
+	returnYYYYMM = sys.argv[6]
+	numberAdults = sys.argv[7]
+	numberChildren = sys.argv[8]
+elif len(sys.argv) == 2:
+	if sys.argv[1] != "def":
+		sys.exit(2)
+	else:
+		fromWhere = "Helsinki"
+		whereTo = "Bangkok"
+		departureDate = "1"
+		departureYYYYMM = "2018-7"
+		returnDate = "1"
+		returnYYYYMM = "2018-8"
+		numberAdults = "2"
+		numberChildren = "1"
+else:
+	print 'windows console run: chcp 65001'
+	print 'usage: python halvatlennot.py "Location" "Destination" "DepartureDay" "DepartureYear-Month" "ReturnDay" "ReturnYear-Month" "# of adult passengers" "# of children passengers"'
+	print 'or python halvatlennot.py def'
+	sys.exit(1)
 
 baseurl = "http://www.halvatlennot.fi"
 
@@ -23,8 +52,13 @@ xpaths = { 'halvatlennot-xpath1' : "//*[@id='tbAptDep']",
 			'halvatlennot-xpath14' : "//select[@name='ddChildren']",
 			'halvatlennot-xpath15' : "//*[@id='btnSearch']",
 			'halvatlennot-xpath16' : "//*[@id='stopsFilter']/table/tbody/tr[2]/td[1]/span",
-			'halvatlennot-xpath17' : "//*[@id='stopsFilter']/table/tbody/tr[3]/td[1]/span"
+			'halvatlennot-xpath17' : "//*[@id='stopsFilter']/table/tbody/tr[3]/td[1]/span",
+			'test' : "//*[@class='smlPrice']/div"
 		}
+
+chrome_options = Options()
+chrome_options.add_argument('--dns-prefetch-disable')
+mydriver = webdriver.Chrome(chrome_options=chrome_options)
 
 fromWhere = "Helsinki"
 
@@ -89,5 +123,21 @@ mydriver.find_element_by_xpath(xpaths['halvatlennot-xpath17']).click()
 
 mydriver.execute_script("window.scrollTo(0, 0)")
 
+#pdb.set_trace()
 
+elem = mydriver.find_element_by_xpath("//*")
 
+cheapest_price = mydriver.find_element_by_class_name("ResultPrice").text
+
+print "Found cheapest price: ", cheapest_price
+
+elems = mydriver.find_elements_by_class_name("ResultPrice")
+
+print "All flight prices found from the first page:"
+i = 0
+for elem in elems:
+	if elem.text != "":
+		i += 1
+		print "#",i," : ",elem.text
+
+mydriver.quit
