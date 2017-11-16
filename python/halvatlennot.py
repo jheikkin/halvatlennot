@@ -111,7 +111,6 @@ mydriver.execute_script("window.scrollTo(0, 0)")
 #pdb.set_trace()
 
 elem = mydriver.find_element_by_xpath("//*")
-#source_code = elem.get_attribute("outerHTML")
 
 cheapest_price = mydriver.find_element_by_class_name("ResultPrice").text
 
