@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
+# chcp1252 in windows cmd promt
+
 if len(sys.argv) > 8:
 	fromWhere = sys.argv[1]
 	whereTo = sys.argv[2]
@@ -32,6 +34,7 @@ else:
 	print 'windows console run: chcp 65001'
 	print 'usage: python halvatlennot.py "Location" "Destination" "DepartureDay" "DepartureYear-Month" "ReturnDay" "ReturnYear-Month" "# of adult passengers" "# of children passengers"'
 	print 'or python halvatlennot.py def'
+	print 'use chcp 1252 in windows cmd prompt if crash to unicodeEncodeError, \u20ac'
 	sys.exit(1)
 
 baseurl = "http://www.halvatlennot.fi"
@@ -59,21 +62,6 @@ xpaths = { 'halvatlennot-xpath1' : "//*[@id='tbAptDep']",
 chrome_options = Options()
 chrome_options.add_argument('--dns-prefetch-disable')
 mydriver = webdriver.Chrome(chrome_options=chrome_options)
-
-fromWhere = "Helsinki"
-
-whereTo = "Bangkok"
-
-departureDate = "1"
-departureYYYYMM = "2018-7"
-
-returnDate = "1"
-returnYYYYMM = "2018-8"
-
-numberAdults = "2"
-numberChildren = "1"
-
-mydriver = webdriver.Chrome()
 mydriver.get(baseurl)
 mydriver.maximize_window()
 
@@ -140,4 +128,4 @@ for elem in elems:
 		i += 1
 		print "#",i," : ",elem.text
 
-mydriver.quit
+mydriver.quit()
